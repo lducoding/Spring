@@ -20,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/loginForm")
+//                .usernameParameter() // 이걸 사용하면 사용자명을 form username 이외의 다른걸로 변경가능
+                .loginProcessingUrl("/login") //login 주소가 호출되면 스프리시큐리티 낚아채서 대신 로그인 진행한다
+                .defaultSuccessUrl("/");
     }
 }

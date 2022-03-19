@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testDB?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .mustache
+
+  jpa:
+    hibernate:
+      ddl-auto: create #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 309155786072-auha2b15gvn95bof2f1q8ivpjc0o2631.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+            - email
+            - profile

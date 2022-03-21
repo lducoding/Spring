@@ -3,6 +3,7 @@ package com.cos.springsecurity.config.oauth;
 import com.cos.springsecurity.config.auth.PrincipalDetails;
 import com.cos.springsecurity.config.oauth.provider.FacebookUserInfo;
 import com.cos.springsecurity.config.oauth.provider.GoogleUserInfo;
+import com.cos.springsecurity.config.oauth.provider.NaverUserInfo;
 import com.cos.springsecurity.config.oauth.provider.OAuth2Userinfo;
 import com.cos.springsecurity.model.User;
 import com.cos.springsecurity.repository.UserRepository;
@@ -13,6 +14,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
@@ -29,6 +32,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         System.out.println("user getClientRegistration::" + userRequest.getClientRegistration()); //registrationId 어떤 oauth로 로그인 했는지 확인가능
         System.out.println("user getAccessToken::" + userRequest.getAccessToken().getTokenValue());
+
         OAuth2User oAuth2User = super.loadUser(userRequest);
         // 구글 버튼 로그인 클릭 -> 구글로그인창 -> 로그인 완료 -> code를 리턴(oauth-client라이브러리) -> access token 요청 여기까지가 userRequest임
         // userRequest정보로 회원프로필 받을 수 있다. -> loadUser 함수를 통해 ->구글로 부터 회원 프로필 받아온다.
@@ -43,6 +47,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         } else if(userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
             System.out.println("페이스북 로그인 요청");
             oAuth2Userinfo = new FacebookUserInfo(oAuth2User.getAttributes());
+        }else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            System.out.println("네이버 로그인 요청");
+            System.out.println((Map)oAuth2User.getAttributes().get("response"));
+            oAuth2Userinfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
         } else {
             System.out.println("우리는 구글 페이스북만 지원함");
         }

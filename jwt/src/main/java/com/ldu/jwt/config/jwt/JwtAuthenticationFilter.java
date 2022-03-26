@@ -1,5 +1,7 @@
 package com.ldu.jwt.config.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ldu.jwt.config.auth.PrincipalDetails;
 import com.ldu.jwt.model.User;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Date;
 
 
 // 스프링 시큐리티에서 UsernamePasswordAuthenticationFilter 가 있음
@@ -70,6 +73,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     // JWT 토큰 만들어서 request 요청한 사용자에게 jwt토큰을 response 해주면 됨
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+        System.out.println("인증이 완료됨");
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+
+        String jwtToken = JWT.create()
+                .withSubject("lduToken") // 토큰 이름
+                .withExpiresAt(new Date(System.currentTimeMillis()+(60000*10))) // 토큰 유효시간
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("username", principalDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC512("donguking")); // 암호화 비밀키
+
+
+        response.addHeader("Authorization","Bearer "+jwtToken);
     }
 }

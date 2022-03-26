@@ -1,12 +1,14 @@
 package com.ldu.jwt.config.auth;
 
 import com.ldu.jwt.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Data
 public class PrincipalDetails implements UserDetails {
 
     private User user;
@@ -51,6 +53,6 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

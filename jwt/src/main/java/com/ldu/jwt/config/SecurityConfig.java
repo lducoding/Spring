@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter) // @CrossOrigin(인증X), 시큐리티 필터에 등록인증O
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager())) //AuthenticationManager 파라미터로 던져야 함
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) //AuthenticationManager 파라미터로 던져야 함
+                .addFilter(new JwtAuthenticationFilter(authenticationManager())) //AuthenticationManager 파라미터로 던져야 함,  로그인 할 때 실행되는 필터
+//                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) //AuthenticationManager 파라미터로 던져야 함
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")

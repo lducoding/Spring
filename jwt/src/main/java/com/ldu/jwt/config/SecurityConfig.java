@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션을 사용하지 않겠다는 의미
                 .and()
-                .addFilter(corsFilter) // @CrossOrigin(인증X), 시큐리티 필터에 등록인증O
+                .addFilter(corsFilter) // @CrossOrigin(인증이 없을 경우 사용),  인증이 있을 경우 시큐리티 필터에 등록
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) //AuthenticationManager 파라미터로 던져야 함 왜냐하면

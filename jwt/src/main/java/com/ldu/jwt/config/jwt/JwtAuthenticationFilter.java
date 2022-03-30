@@ -51,7 +51,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             System.out.println(user);
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()); // 첫번쨰파라미터username 두번째파라미터 password
-
+            // UsernamePasswordAuthenticationToken은 밑에 Authentication의 구현체이다.
+            // Authentication(Interface)을 구현한 구현체여야만 AuthenticationManager에서 인증 과정을 수행할 수 있다.
             // PrincipalDetailsService의 loadUserByUsername() 실행된 후 정상이면 authentication이 리턴 됨
             // DB에 있는 username과 password가 일치한다
             Authentication authentication = authenticationManager.authenticate(authenticationToken);

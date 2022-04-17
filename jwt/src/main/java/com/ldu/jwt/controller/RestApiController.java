@@ -37,6 +37,7 @@ public class RestApiController {
         return "회원가입 완료";
     }
 
+    @Secured("ROLE_ADMIn")
     @GetMapping("/api/v1/user")
     public String user() {
         return "user";

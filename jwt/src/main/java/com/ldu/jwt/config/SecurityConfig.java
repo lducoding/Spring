@@ -40,14 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 바로 파라미터에 authenticationManager() 넣을 수 있는 이뉴는 WebSecurityConfigurerAdapter가 들고있음 ,  로그인 할 때 실행되는 필터
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) //AuthenticationManager 파라미터로 던져야 함
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/**").permitAll()
-//                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/api/v1/manager/**")
-                .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/api/v1/admin/**")
-                .access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/home")
-                .access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/api/v1/user/**").permitAll()
+////                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+//                .antMatchers("/api/v1/manager/**")
+//                .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+//                .antMatchers("/api/v1/admin/**")
+//                .access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/home")
+//                .access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll();
     }
 }

@@ -39,3 +39,7 @@ out/
 # End of https://www.toptal.com/developers/gitignore/api/java
 
 .DS_Store
+
+
+### log ###
+.log

@@ -15,24 +15,4 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class MemberRepositoryTest {
 
-    @Autowired
-    MemberRepository memberRepository;
-
-    @Test
-    @Transactional
-//    @Rollback(value = false)
-    public void testMember() throws Exception {
-        //given
-        Member member = new Member();
-        member.setUsername("memberA");
-
-        //when
-        Long memberId = memberRepository.save(member);
-        Member findMember = memberRepository.find(memberId);
-
-        //then
-        Assertions.assertThat(member.getId()).isEqualTo(findMember.getId());
-        Assertions.assertThat(member.getUsername()).isEqualTo(findMember.getUsername());
-        Assertions.assertThat(member).isEqualTo(findMember);
-    }
 }

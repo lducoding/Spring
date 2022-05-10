@@ -1,5 +1,7 @@
 package jpabook.jpashop.exception;
 
+import org.json.simple.JSONObject;
+
 public class NotEnoughStockException extends RuntimeException{
 
     public NotEnoughStockException() {
@@ -8,6 +10,11 @@ public class NotEnoughStockException extends RuntimeException{
 
     public NotEnoughStockException(String message) {
         super(message);
+    }
+
+    public JSONObject NotEnoughStockException(String message) {
+        JSONObject jsonObject = new JSONObject();
+        return jsonObject;
     }
 
     public NotEnoughStockException(String message, Throwable cause) {

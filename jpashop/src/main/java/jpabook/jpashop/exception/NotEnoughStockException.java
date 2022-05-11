@@ -12,11 +12,6 @@ public class NotEnoughStockException extends RuntimeException{
         super(message);
     }
 
-    public JSONObject NotEnoughStockException(String message) {
-        JSONObject jsonObject = new JSONObject();
-        return jsonObject;
-    }
-
     public NotEnoughStockException(String message, Throwable cause) {
         super(message, cause);
     }

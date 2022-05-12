@@ -1,7 +1,5 @@
 package jpabook.jpashop.exception;
 
-import org.json.simple.JSONObject;
-
 public class NotEnoughStockException extends RuntimeException{
 
     public NotEnoughStockException() {

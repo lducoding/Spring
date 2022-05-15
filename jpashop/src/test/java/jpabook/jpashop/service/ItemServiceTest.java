@@ -1,18 +1,47 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.domain.item.Album;
+import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.repository.ItemRepository;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Transactional
 public class ItemServiceTest {
 
+    @Autowired ItemService itemService;
+    @Autowired ItemRepository itemRepository;
+
     @Test
+    @Rollback(value = false)
     public void itemSave() throws Exception {
         //given
+        Album album = new Album();
+        album.setName("1집");
+        album.setPrice(30000);
+        album.setStockQuantity(10);
+        album.setArtist("sultan");
+        album.setEtc("명반");
+        Category category = new Category();
+        category.setName("album");
 
         //when
+        itemService.itemSave(album);
 
         //then
+        assertEquals(album, itemRepository.findOne(1L));
     }
 
     @Test

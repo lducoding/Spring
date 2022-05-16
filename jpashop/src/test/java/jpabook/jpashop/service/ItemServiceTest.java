@@ -27,7 +27,7 @@ public class ItemServiceTest {
     @Autowired EntityManager em;
 
     @Test
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void itemSave() throws Exception {
         //given
         Album album = new Album();

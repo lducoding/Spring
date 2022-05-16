@@ -12,6 +12,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,6 +24,7 @@ public class ItemServiceTest {
 
     @Autowired ItemService itemService;
     @Autowired ItemRepository itemRepository;
+    @Autowired EntityManager em;
 
     @Test
     @Rollback(value = false)

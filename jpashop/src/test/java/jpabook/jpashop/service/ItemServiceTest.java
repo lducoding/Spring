@@ -30,12 +30,12 @@ public class ItemServiceTest {
     @Rollback(value = false)
     public void itemSave() throws Exception {
         //given
-        Album album = new Album();
+        Item album = new Album();
         album.setName("1집");
         album.setPrice(30000);
         album.setStockQuantity(10);
-        album.setArtist("sultan");
-        album.setEtc("명반");
+//        album.setArtist("sultan");
+//        album.setEtc("명반");
         Category category = new Category();
         category.setName("album");
 
@@ -55,7 +55,7 @@ public class ItemServiceTest {
         Item item1 = itemRepository.findOne(1L);
         System.out.println(item1.getId()+"11===================");
         Item item2 = itemRepository.findOne(2L);
-        System.out.println(item2.getId());
+        System.out.println(itemList);
         Item item3 = itemRepository.findOne(3L);
 
         //then

@@ -27,7 +27,7 @@ public class ItemServiceTest {
     @Autowired EntityManager em;
 
     @Test
-//    @Rollback(value = false)
+    @Rollback(value = false)
     public void itemSave() throws Exception {
         //given
         Album album = new Album();
@@ -51,8 +51,17 @@ public class ItemServiceTest {
         //given
 
         //when
+        List<Item> itemList = itemService.findItem();
+        Item item1 = itemRepository.findOne(1L);
+        System.out.println(item1.getId()+"11===================");
+        Item item2 = itemRepository.findOne(2L);
+        System.out.println(item2.getId());
+        Item item3 = itemRepository.findOne(3L);
 
         //then
+        assertEquals(item1, itemList.get(0));
+        assertEquals(item1, itemList.get(1));
+        assertEquals(item1, itemList.get(2));
     }
 
     @Test

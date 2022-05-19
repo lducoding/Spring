@@ -2,6 +2,7 @@ package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.domain.item.Album;
+import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import org.junit.Test;
@@ -49,19 +50,24 @@ public class ItemServiceTest {
     @Test
     public void findItem() throws Exception {
         //given
-
+        Item item = new Album();
+        Book book = new Book();
+        book.setName("책");
+        book.setId(2L);
+        book.setAuthor("하하");
+        item.setName("술탄오브더디스코");
+        item.setPrice(30000);
+        item.setId(1L);
+        item.setStockQuantity(30);
+        itemService.itemSave(item);
+        itemService.itemSave(book);
         //when
         List<Item> itemList = itemService.findItem();
         Item item1 = itemRepository.findOne(1L);
-        System.out.println(item1.getId()+"11===================");
-        Item item2 = itemRepository.findOne(2L);
         System.out.println(itemList);
-        Item item3 = itemRepository.findOne(3L);
 
         //then
         assertEquals(item1, itemList.get(0));
-        assertEquals(item1, itemList.get(1));
-        assertEquals(item1, itemList.get(2));
     }
 
     @Test

@@ -73,7 +73,10 @@ public class ItemServiceTest {
     @Test
     public void findOne() throws Exception {
         //given
-
+        Item album = new Album();
+        album.setName("1집");
+        album.setPrice(30000);
+        album.setStockQuantity(10);
         //when
 
         //then

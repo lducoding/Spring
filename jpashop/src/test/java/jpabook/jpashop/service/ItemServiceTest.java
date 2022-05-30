@@ -78,8 +78,11 @@ public class ItemServiceTest {
         album.setPrice(30000);
         album.setStockQuantity(10);
         //when
+        itemService.itemSave(album);
+        Item one = itemService.findOne(1L);
 
         //then
+        assertEquals(one, itemService.findOne(1L));
     }
 
 }

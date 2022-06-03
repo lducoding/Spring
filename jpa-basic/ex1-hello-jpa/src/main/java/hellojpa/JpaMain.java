@@ -18,15 +18,6 @@ public class JpaMain {
 
         tx.begin();
         try {
-            Member member1 = new Member(12L, "merlin");
-
-            em.persist(member1);
-            em.flush();
-            System.out.println("==========");
-            Member member3 = em.find(Member.class, 11L);
-            System.out.println(member1==member3);
-
-            member3.setName("nomal");
 
             tx.commit();
         } catch (Exception e) {

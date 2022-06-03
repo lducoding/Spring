@@ -18,7 +18,8 @@
 <!--            코멘트 달아서 보여준다.-->
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="10"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+<!--            실행시 테이블 자동생성 ddl 실행-->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
         </properties>
     </persistence-unit>
 </persistence>

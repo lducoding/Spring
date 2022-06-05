@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
 
@@ -24,14 +23,8 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("mmm");
-            member.setTeam(team);
+            member.changeTeam(team);
             em.persist(member);
-            System.out.println(member);
-
-            Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
-            System.out.println(findTeam);
-
 
             tx.commit();
         } catch (Exception e) {

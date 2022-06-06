@@ -17,14 +17,13 @@ public class JpaMain {
 
         tx.begin();
         try {
-            Team team = new Team();
-            team.setName("ttt");
-            em.persist(team);
+            Movie movie = new Movie();
+            movie.setPrice(10000);
+            movie.setName("제목");
+            movie.setDirector("이감독");
+            movie.setActor("이배우");
 
-            Member member = new Member();
-            member.setUsername("mmm");
-            member.changeTeam(team);
-            em.persist(member);
+            em.persist(movie);
 
             tx.commit();
         } catch (Exception e) {

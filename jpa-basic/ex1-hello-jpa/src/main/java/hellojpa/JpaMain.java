@@ -17,13 +17,19 @@ public class JpaMain {
 
         tx.begin();
         try {
-            Movie movie = new Movie();
-            movie.setPrice(10000);
-            movie.setName("제목");
-            movie.setDirector("이감독");
-            movie.setActor("이배우");
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.persist(movie);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
+
+            em.flush();
+            em.clear();
+
+            
 
             tx.commit();
         } catch (Exception e) {

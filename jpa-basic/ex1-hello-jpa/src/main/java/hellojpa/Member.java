@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Member extends BaseEntity {
@@ -15,4 +16,10 @@ public class Member extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
+
+    @Embedded
+    private Period period;
+
+    @Embedded
+    private Address address;
 }

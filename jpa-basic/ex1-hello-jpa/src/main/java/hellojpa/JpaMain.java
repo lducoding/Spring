@@ -33,11 +33,13 @@ public class JpaMain {
             em.clear();
 
             System.out.println("===============================");
-            member.getFavoriteFoods().remove("족방");
-            member.getFavoriteFoods().add("족23");
+            Member member1 = em.find(Member.class, member.getId());
 
-//            member.getAddressHistory().remove(new Address("old1", "Street", "1000"));
-//            member.getAddressHistory().add(new Address("newCity", "Street", "1000"));
+//            member1.getFavoriteFoods().remove("족방");
+//            member1.getFavoriteFoods().add("족23");
+
+            member1.getAddressHistory().remove(new Address("old1", "Street", "1000"));
+            member1.getAddressHistory().add(new Address("newCity", "Street", "1000"));
 
 
             tx.commit();

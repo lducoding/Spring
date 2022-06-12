@@ -4,6 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class JpaMain {
 
@@ -17,30 +21,15 @@ public class JpaMain {
 
         tx.begin();
         try {
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity", "Street", "1000"));
 
-            member.getFavoriteFoods().add("이마트피자");
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족방");
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
-            member.getAddressHistory().add(new Address("old1", "Street", "1000"));
-            member.getAddressHistory().add(new Address("old2", "Street", "1000"));
-            em.persist(member);
+            Root<Member> m = query.from(Member.class);
 
-            em.flush();
-            em.clear();
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
 
-            System.out.println("===============================");
-            Member member1 = em.find(Member.class, member.getId());
-
-//            member1.getFavoriteFoods().remove("족방");
-//            member1.getFavoriteFoods().add("족23");
-
-            member1.getAddressHistory().remove(new Address("old1", "Street", "1000"));
-            member1.getAddressHistory().add(new Address("newCity", "Street", "1000"));
-
+            List<Member> resultList = em.createQuery(cq).getResultList();
 
             tx.commit();
         } catch (Exception e) {

@@ -10,10 +10,9 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-#        show_sql: true # sout? ?? sql ???
         format_sql: true
 
 logging:
   level:
-    org.hibernate.SQL: debug # ??? ?? jpa? hibernate? ???? sql? ? ??
+    org.hibernate.SQL: debug 
     org.hibernate.type: trace;

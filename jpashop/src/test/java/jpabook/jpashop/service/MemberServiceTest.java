@@ -36,7 +36,7 @@ public class MemberServiceTest {
 
         //then
 //        em.flush();
-        assertEquals(member, memberRepository.findOne(joinId));
+        assertEquals(member, memberRepository.findOne (joinId));
     }
 
     @Test(expected = IllegalStateException.class)

@@ -47,7 +47,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    // 생성 메서드
+//     생성 메서드
     public static Order createOrder(Member member, Delivery delivery, OrderItem... items) {
         Order order = new Order();
         order.setMember(member);
@@ -59,22 +59,22 @@ public class Order {
         order.setOrderDate(LocalDateTime.now());
         return order;
     }
-
-    // 비즈니스 로직
-    public void cancel() {
-        if(delivery.getStatus() == DeliveryStatus.COMP) {
-            throw new IllegalStateException("이미 배송이 되어 취소불가");
-        }
-        this.setStatus(OrderStatus.CANCEL);
-        for (OrderItem orderItem : orderItems) {
-            orderItem.cancel();
-        }
-    }
-
-    // 조회 로직
-    public int getTotalPrice() {
-        return orderItems.stream()
-                .mapToInt(OrderItem::getTotalPrice)
-                .sum();
-    }
+//
+//    // 비즈니스 로직
+//    public void cancel() {
+//        if(delivery.getStatus() == DeliveryStatus.COMP) {
+//            throw new IllegalStateException("이미 배송이 되어 취소불가");
+//        }
+//        this.setStatus(OrderStatus.CANCEL);
+//        for (OrderItem orderItem : orderItems) {
+//            orderItem.cancel();
+//        }
+//    }
+//
+//    // 조회 로직
+//    public int getTotalPrice() {
+//        return orderItems.stream()
+//                .mapToInt(OrderItem::getTotalPrice)
+//                .sum();
+//    }
 }

@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
     @Id @GeneratedValue
@@ -59,22 +62,22 @@ public class Order {
         order.setOrderDate(LocalDateTime.now());
         return order;
     }
-//
-//    // 비즈니스 로직
-//    public void cancel() {
-//        if(delivery.getStatus() == DeliveryStatus.COMP) {
-//            throw new IllegalStateException("이미 배송이 되어 취소불가");
-//        }
-//        this.setStatus(OrderStatus.CANCEL);
-//        for (OrderItem orderItem : orderItems) {
-//            orderItem.cancel();
-//        }
-//    }
-//
-//    // 조회 로직
-//    public int getTotalPrice() {
-//        return orderItems.stream()
-//                .mapToInt(OrderItem::getTotalPrice)
-//                .sum();
-//    }
+
+    // 비즈니스 로직
+    public void cancel() {
+        if(delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송이 되어 취소불가");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    // 조회 로직
+    public int getTotalPrice() {
+        return orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
+    }
 }

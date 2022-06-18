@@ -62,7 +62,7 @@ public class ItemServiceTest {
         itemService.itemSave(item);
         itemService.itemSave(book);
         //when
-        List<Item> itemList = itemService.findItem();
+        List<Item> itemList = itemService.findItems();
         Item item1 = itemRepository.findOne(1L);
         System.out.println(itemList);
 

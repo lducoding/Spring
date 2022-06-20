@@ -14,9 +14,11 @@ public class ItemUpdateTest {
 
     @Autowired
     EntityManager em;
+    @Autowired
+    ItemService itemService;
 
     @Test
     public void updateTest() throws Exception {
-
+        
     }
 }

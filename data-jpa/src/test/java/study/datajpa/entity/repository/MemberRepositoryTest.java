@@ -3,6 +3,10 @@ package study.datajpa.entity.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
@@ -148,5 +152,50 @@ class MemberRepositoryTest {
         for (Member member : result) {
             System.out.println(member);
         }
+    }
+
+    @Test
+    public void returnType() {
+        Member member1 = new Member("AAA",10);
+        Member member2 = new Member("AAA",20);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        List<Member> aaa = memberRepository.findByUsername("AAA");
+        System.out.println(aaa);
+    }
+
+    @Test
+    public void paging() throws Exception {
+        //given
+        memberRepository.save(new Member("membeer1", 10));
+        memberRepository.save(new Member("membeer2", 10));
+        memberRepository.save(new Member("membeer3", 10));
+        memberRepository.save(new Member("membeer4", 10));
+        memberRepository.save(new Member("membeer5", 10));
+
+        int age = 10;
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "username"));
+
+        //when
+
+        // Page 와 Slice
+        // Slice 는 limit에 하나 더 추가해서 불러온다. 위 예에서는 3개니깐 4개 불러
+        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+//        Slice<Member> page = memberRepository.findByAge(age, pageRequest);
+
+        Page<MemberDto> toMap = page.map(member -> new MemberDto(member.getId(), member.getUsername(), "TTT"));
+        
+
+        //then
+        List<Member> content = page.getContent();
+        long totalElements = page.getTotalElements();
+
+        assertThat(content.size()).isEqualTo(3); // 불러온 페이지 수
+        assertThat(page.getTotalElements()).isEqualTo(5); // 전체 페이지 수
+        assertThat(page.getNumber()).isEqualTo(0); // 페이지 번호 가져옴 (총 2페이지 중 1페이지)
+        assertThat(page.getTotalPages()).isEqualTo(2); // 전체 페이지 갯수
+        assertThat(page.isFirst()).isTrue(); // 첫번째 페이지 인지?
+        assertThat(page.hasNext()).isTrue(); // 다음 페이지가 있는지
     }
 }

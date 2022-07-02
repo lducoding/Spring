@@ -15,6 +15,8 @@ import study.datajpa.entity.Team;
 import study.datajpa.repository.MemberRepository;
 import study.datajpa.repository.TeamRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,8 @@ class MemberRepositoryTest {
     MemberRepository memberRepository;
     @Autowired
     TeamRepository teamRepository;
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember() {
@@ -185,7 +189,7 @@ class MemberRepositoryTest {
 //        Slice<Member> page = memberRepository.findByAge(age, pageRequest);
 
         Page<MemberDto> toMap = page.map(member -> new MemberDto(member.getId(), member.getUsername(), "TTT"));
-        
+
 
         //then
         List<Member> content = page.getContent();
@@ -197,5 +201,79 @@ class MemberRepositoryTest {
         assertThat(page.getTotalPages()).isEqualTo(2); // 전체 페이지 갯수
         assertThat(page.isFirst()).isTrue(); // 첫번째 페이지 인지?
         assertThat(page.hasNext()).isTrue(); // 다음 페이지가 있는지
+    }
+
+    @Test
+    public void testBulkUpdate() throws Exception {
+        //given
+        memberRepository.save(new Member("membeer1", 10));
+        memberRepository.save(new Member("membeer2", 19));
+        memberRepository.save(new Member("membeer3", 20));
+        memberRepository.save(new Member("membeer4", 21));
+        memberRepository.save(new Member("membeer5", 40));
+
+        //when
+        int bulkAgePlus = memberRepository.bulkAgePlus(20);
+//        em.clear();
+
+        List<Member> members = memberRepository.findByUsername("membeer5");
+        System.out.println(members.get(0));
+
+        //then
+        assertThat(bulkAgePlus).isEqualTo(3);
+    }
+
+    @Test
+    public void findMemberLazy() throws Exception {
+        //given
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamB);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        List<Member> members = memberRepository.findEntityGraphByUsername("member1");
+
+        for (Member member : members) {
+            System.out.println("member: "+ member.getUsername());
+            System.out.println("member.Team: "+ member.getTeam());
+        }
+
+        //then
+    }
+
+    @Test
+    public void queryHint() throws Exception {
+        //given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        Member findMember = memberRepository.findReadOnlyByUsername("member1");
+        findMember.setUsername("member2");
+        em.flush();
+
+        //when
+
+        //then
+    }
+
+    @Test
+    public void lock() throws Exception {
+        //given
+        Member member1 = new Member("member1", 10);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        List<Member> members = memberRepository.findLockByUsername("member1");
     }
 }

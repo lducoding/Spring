@@ -276,4 +276,32 @@ class MemberRepositoryTest {
 
         List<Member> members = memberRepository.findLockByUsername("member1");
     }
+
+    @Test
+    public void callCustom() throws Exception {
+        //given
+        List<Member> memberCustom = memberRepository.findMemberCustom();
+    }
+
+    @Test
+    public void jpaEventBaseEntity() throws Exception {
+        //given
+        Member member = new Member("member1");
+        memberRepository.save(member);
+
+        Thread.sleep(100);
+        member.setUsername("member2");
+
+        em.flush();
+        em.clear();
+
+        //when
+        Member findMember = memberRepository.findById(member.getId()).get();
+
+        //then
+        System.out.println("created::"+findMember.getCreatedDate());
+        System.out.println("updated::"+findMember.getLastModifiedDate());
+        System.out.println("updated::"+findMember.getCratedBy());
+        System.out.println("updated::"+findMember.getLastModifiedBy());
+    }
 }

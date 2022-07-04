@@ -33,7 +33,7 @@ public class MemberController {
         return memberRepository.findAll(pageable);
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         memberRepository.save(new Member("userA"));
     }

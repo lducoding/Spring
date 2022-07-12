@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.dto.MemberSearchCondition;
 import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.entity.Member;
+import study.querydsl.entity.QMember;
 import study.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -100,4 +101,5 @@ class MemberRepositoryTest {
         assertThat(result.getSize()).isEqualTo(3);
         assertThat(result).extracting("username").containsExactly("member1","member2","member3");
     }
+
 }

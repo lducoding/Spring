@@ -20,4 +20,5 @@ public class MemberServiceTest {
         Assertions.assertThat(member).isEqualTo(findMember); // import org.assertj.core.api.Assertions;
 
     }
+
 }

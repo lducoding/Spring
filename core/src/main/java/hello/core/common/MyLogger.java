@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+// request는 http 요청 하나가 들어오고 나갈때까지 유지되는 스코프, HTTP요청마다 별도의 인스턴스가 생성되고 관리된다.
 public class MyLogger {
 
     private String uuid;
